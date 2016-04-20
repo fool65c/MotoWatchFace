@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#333333</color>
+    <color name="handShadowColor">#000000</color>
+    <color name="handColor">#E5E4E2</color>
+    <color name="handTipColor">#C35817</color>
+    <color name="accessoryBackGroundColor">#1a1a1a</color>
+    <color name="accessoryColor">#C35817</color>
+    <color name="secondHandColor">#C35817</color>
+    <color name="dayColor">#E5E4E2</color>
+    <color name="test">#FFF944</color>
+</resources>

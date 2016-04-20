@@ -1,0 +1,15 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="battery_switch"
+        android:title="@string/pref_title_show_phone_battery"
+        android:summary="@string/pref_description_show_phone_battery" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="weather_switch"
+        android:title="@string/pref_title_show_weather"
+        android:summary="@string/pref_description_show_weather" />
+
+</PreferenceScreen>
