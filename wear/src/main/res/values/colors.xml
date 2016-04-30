@@ -9,4 +9,6 @@
     <color name="secondHandColor">#C35817</color>
     <color name="dayColor">#E5E4E2</color>
     <color name="test">#FFF944</color>
+    <color name="dayLightPercentColor">#F3CB3D</color>
+    <color name="nightPercentColor">#A4A4A4</color>
 </resources>

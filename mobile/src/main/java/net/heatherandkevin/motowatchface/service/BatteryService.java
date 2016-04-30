@@ -1,149 +1,102 @@
 package net.heatherandkevin.motowatchface.service;
 
+import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.wearable.DataMap;
-import com.google.android.gms.wearable.MessageApi;
-import com.google.android.gms.wearable.MessageEvent;
-import com.google.android.gms.wearable.Node;
-import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.Wearable;
-import com.google.android.gms.wearable.WearableListenerService;
 
-import net.heatherandkevin.motowatchface.Test;
+import net.heatherandkevin.motowatchface.receivers.BatteryAlarmReceiver;
 
-import java.util.Date;
+public class BatteryService extends Service
+        implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
-public class BatteryService extends WearableListenerService implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
-    public static String SERVICE_CALLED_WEAR = "WearRequestBatteryLevel";
+    private GoogleApiClient mGoogleApiClient;
+    private static final String TAG = "BATTERY_SERVICE";
+    public static final String BATTERY_UPDATE = "battery";
+    private static final String BATTERY_URI = "/BATTERY_LEVEL";
 
-    public BatteryService() {
-    }
-
-    @Override
-    public void onMessageReceived(MessageEvent messageEvent) {
-        super.onMessageReceived(messageEvent);
-
-        String event = messageEvent.getPath();
-
-        Log.d("KMAGER", event);
-
-        String [] message = event.split("--");
-
-        if (message[0].equals(SERVICE_CALLED_WEAR)) {
-            Log.i("KMAGER", "CALLING UPDATE BATTERY STATS");
-
-            //GoogleApi
-            //Connect the GoogleApiClient
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addApi(Wearable.API)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .build();
-
-            if (!mResolvingError) {
-                mGoogleApiClient.connect();
-                updateBatteryStats();
-            }
-        }
-    }
-
-    private void updateBatteryStats() {
-        Float batteryLevel;
-
-        IntentFilter batteryStatusIntentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        Intent batteryStatusIntent = this.getApplicationContext().registerReceiver(null, batteryStatusIntentFilter);
-
-        if (batteryStatusIntent != null) {
-            int level = batteryStatusIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-            int scale = batteryStatusIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-            batteryLevel = level / (float) scale;
-            Log.i("KMAGER", "Battery Level: " + batteryLevel);
-            sendMessage(batteryLevel);
-        } else {
-            Log.i("KMAGER", "CAN NOT GET BATTERY LEVEL");
-        }
-    }
-
-    /**
-     * Begin GoogleApiClient operations
-     */
-    Node mNode; // the connected device to send the message to
-    GoogleApiClient mGoogleApiClient;
-    private boolean mResolvingError=false;
-    public static String SERVICE_BATTERY_LEVEL = "MobileBatteryLevel";
     @Override
     public void onConnected(Bundle bundle) {
-        resolveNode();
+        Log.i(TAG, " google client API connected");
+        new BatteryCheckAsync().execute();
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        Log.i(TAG, " google client API suspended");
+        this.stopSelf();
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        Log.w(TAG, " google client API failed: " + connectionResult.getErrorMessage());
+        mGoogleApiClient.disconnect();
+        this.stopSelf();
     }
 
-    /**
-     * Resolve the node = the connected device to send the message to
-     */
-    private void resolveNode() {
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "Starting Service");
 
-        Wearable.NodeApi.getConnectedNodes(mGoogleApiClient)
-                .setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
-                    @Override
-                    public void onResult(NodeApi.GetConnectedNodesResult nodes) {
-                        for (Node node : nodes.getNodes()) {
-                            mNode = node;
-                        }
-                    }
-                });
-    }
-
-    /**
-     * Send message to mobile handheld
-     */
-    private void sendMessage(Float key) {
-        if (mGoogleApiClient==null){
-            return;
+        if (intent != null && intent.hasExtra(BATTERY_UPDATE)){
+            //Connect the GoogleApiClient
+            mGoogleApiClient = new GoogleApiClient.Builder(BatteryService.this.getApplicationContext())
+                    .addApi(Wearable.API)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .build();
+            mGoogleApiClient.connect();
+            BatteryAlarmReceiver.startAlarms(BatteryService.this.getApplicationContext());
         }
 
-        Log.i("KMAGER", "IS THIS WORKING???" + key);
+        return START_NOT_STICKY;
+    }
 
-        final PutDataMapRequest putRequest = PutDataMapRequest.create("/SAMPLE");
-        putRequest.getDataMap().putLong("timestamp", System.currentTimeMillis());
-        putRequest.getDataMap().putFloat("BatteryLevel", key);
-        Wearable.DataApi.putDataItem(mGoogleApiClient, putRequest.asPutDataRequest());
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
-//        if (mNode != null && mGoogleApiClient!= null && mGoogleApiClient.isConnected()) {
-//            Log.d("WEAR", "-- " + mGoogleApiClient.isConnected());
-//            Wearable.MessageApi.sendMessage(
-//                    mGoogleApiClient, mNode.getId(), SERVICE_BATTERY_LEVEL + "--" + Key, null).setResultCallback(
-//
-//                    new ResultCallback<MessageApi.SendMessageResult>() {
-//                        @Override
-//                        public void onResult(MessageApi.SendMessageResult sendMessageResult) {
-//
-//                            if (!sendMessageResult.getStatus().isSuccess()) {
-//                                Log.e("WEAR", "Failed to send message with status code: "
-//                                        + sendMessageResult.getStatus().getStatusCode());
-//                            }
-//                        }
-//                    }
-//            );
-//        }
 
+    private class BatteryCheckAsync extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... arg0) {
+            float batteryLevel = getBatteryLevel();
+            Log.i(TAG,"Battery Level: " + batteryLevel);
+            updateWear(batteryLevel);
+            mGoogleApiClient.disconnect();
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result){
+            BatteryService.this.stopSelf();
+        }
+
+        private float getBatteryLevel(){
+            IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+            Intent batteryStatus = BatteryService.this.registerReceiver(null, ifilter);
+            int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+            int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+            return level / (float)scale;
+        }
+
+        private void updateWear(float batteryLevel) {
+            final PutDataMapRequest putRequest = PutDataMapRequest.create(BATTERY_URI);
+            putRequest.getDataMap().putLong("timestamp", System.currentTimeMillis());
+            putRequest.getDataMap().putFloat("BatteryLevel", batteryLevel);
+            Wearable.DataApi.putDataItem(mGoogleApiClient, putRequest.asPutDataRequest());
+        }
     }
 }
