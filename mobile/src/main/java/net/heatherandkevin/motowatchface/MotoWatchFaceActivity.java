@@ -14,7 +14,7 @@ import net.heatherandkevin.motowatchface.receivers.WeatherAlarmReceiver;
 import net.heatherandkevin.motowatchface.service.BatteryService;
 import net.heatherandkevin.motowatchface.service.WeatherService;
 
-public class Test extends Activity {
+public class MotoWatchFaceActivity extends Activity {
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 6565;
 
     public static final String BATTERY_KEY = "battery_switch";
@@ -44,7 +44,6 @@ public class Test extends Activity {
 
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.pref_general);
-
         }
 
         @Override

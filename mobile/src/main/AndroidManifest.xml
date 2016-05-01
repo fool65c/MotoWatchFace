@@ -19,8 +19,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".Test"
-            android:label="Mager">
+            android:name=".MotoWatchFaceActivity"
+            android:label="MotoWatchFace">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

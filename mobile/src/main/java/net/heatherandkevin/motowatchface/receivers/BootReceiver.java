@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import net.heatherandkevin.motowatchface.Test;
+import net.heatherandkevin.motowatchface.MotoWatchFaceActivity;
 import net.heatherandkevin.motowatchface.service.BatteryService;
 import net.heatherandkevin.motowatchface.service.WeatherService;
 
@@ -23,7 +23,7 @@ public class BootReceiver extends BroadcastReceiver {
             Log.i(TAG, "Received Boot Intent");
             SharedPreferences prefs = context.getSharedPreferences("net.heatherandkevin.motowatchface_preferences", Context.MODE_PRIVATE);
             //check battery
-            if (prefs.getBoolean(Test.BATTERY_KEY,false)) {
+            if (prefs.getBoolean(MotoWatchFaceActivity.BATTERY_KEY,false)) {
                 Intent monitorIntent = new Intent(context, BatteryService.class);
                 monitorIntent.putExtra(BatteryService.BATTERY_UPDATE, true);
                 Log.i(TAG, "Starting Battery Receiver");
@@ -33,7 +33,7 @@ public class BootReceiver extends BroadcastReceiver {
             }
 
             //check weather
-            if (prefs.getBoolean(Test.WEATHER_KEY,false)) {
+            if (prefs.getBoolean(MotoWatchFaceActivity.WEATHER_KEY,false)) {
                 Intent monitorIntent = new Intent(context, WeatherService.class);
                 monitorIntent.putExtra(WeatherService.WEATHER_UPDATE, true);
                 Log.i(TAG, "Starting Weather Receiver");
