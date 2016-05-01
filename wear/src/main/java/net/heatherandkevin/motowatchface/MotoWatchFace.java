@@ -463,7 +463,7 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
                 //draw week day
                 if ( dayOval == null ) {
                     dayOval = new RectF(xCenter - accessoryOffset - accessoryCircleSize + 12f,
-                            yCenter - accessoryCircleSize + 9f,
+                            yCenter - accessoryCircleSize + 8f,
                             xCenter - accessoryOffset + accessoryCircleSize - 9f,
                             yCenter + accessoryCircleSize - 14f);
                 }
@@ -478,7 +478,7 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
                 //Add the  date in text
                 canvas.drawText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)),
                         xCenter - accessoryOffset + 2f,
-                        yCenter + 10,
+                        yCenter + 12,
                         mDayNumberPaint);
 
                 //Draw wear battery level
