@@ -6,3 +6,7 @@
 /build
 /captures
 gradle/**
+gradle.properties
+gradlew
+gradlew.bat
+**/*.apk
