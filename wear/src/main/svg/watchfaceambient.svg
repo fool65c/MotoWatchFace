@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="watchface.svg">
+  <defs
+     id="defs4">
+    <filter
+       inkscape:label="Film Grain"
+       inkscape:menu="Image Effects"
+       inkscape:menu-tooltip="Adds a small scale graininess"
+       style="color-interpolation-filters:sRGB;"
+       id="filter3855"
+       x="-0.10000000000000002">
+      <feTurbulence
+         type="fractalNoise"
+         numOctaves="5"
+         baseFrequency="0.0049999999999999515 1"
+         seed="0"
+         result="result0"
+         id="feTurbulence3857" />
+      <feColorMatrix
+         result="result4"
+         values="0"
+         type="saturate"
+         id="feColorMatrix3859" />
+      <feComposite
+         in="SourceGraphic"
+         in2="result4"
+         operator="arithmetic"
+         k1="0.29999999999999999"
+         k2="0.69999999999999996"
+         k3="0.14999999999999999"
+         result="result2"
+         id="feComposite3861"
+         k4="0.050000000000000003" />
+      <feBlend
+         result="result5"
+         mode="normal"
+         in="result2"
+         in2="SourceGraphic"
+         id="feBlend3863" />
+      <feComposite
+         in="result5"
+         in2="SourceGraphic"
+         operator="in"
+         result="result3"
+         id="feComposite3865" />
+    </filter>
+    <filter
+       inkscape:label="Matte Ridge"
+       inkscape:menu="Ridges"
+       inkscape:menu-tooltip="Soft pastel ridge"
+       style="color-interpolation-filters:sRGB;"
+       id="filter4069">
+      <feGaussianBlur
+         stdDeviation="0.5"
+         result="result1"
+         id="feGaussianBlur4071" />
+      <feBlend
+         in="SourceGraphic"
+         mode="normal"
+         result="result5"
+         in2="result1"
+         id="feBlend4073" />
+      <feGaussianBlur
+         stdDeviation="3"
+         result="result6"
+         in="result5"
+         id="feGaussianBlur4075" />
+      <feComposite
+         operator="xor"
+         in="result6"
+         in2="result6"
+         result="result8"
+         id="feComposite4077" />
+      <feComposite
+         operator="in"
+         result="fbSourceGraphic"
+         in="result6"
+         in2="result8"
+         id="feComposite4079" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0 "
+         id="feColorMatrix4081" />
+      <feGaussianBlur
+         result="result0"
+         in="fbSourceGraphic"
+         stdDeviation="0.5"
+         id="feGaussianBlur4083" />
+      <feSpecularLighting
+         specularExponent="55"
+         specularConstant="2"
+         surfaceScale="2"
+         lighting-color="rgb(255,255,255)"
+         result="result1"
+         in="result0"
+         id="feSpecularLighting4085">
+        <fePointLight
+           z="20000"
+           y="-10000"
+           x="-5000"
+           id="fePointLight4087" />
+      </feSpecularLighting>
+      <feComposite
+         operator="arithmetic"
+         result="result2"
+         in="result1"
+         in2="fbSourceGraphicAlpha"
+         k1="1"
+         id="feComposite4089" />
+      <feComposite
+         k3="1"
+         k2="0.5"
+         operator="arithmetic"
+         result="result4"
+         in="fbSourceGraphic"
+         in2="result2"
+         id="feComposite4091" />
+      <feComposite
+         operator="over"
+         in="result9"
+         in2="result4"
+         result="result91"
+         id="feComposite4093" />
+      <feBlend
+         mode="screen"
+         in2="result91"
+         id="feBlend4095" />
+    </filter>
+    <filter
+       inkscape:label="Ridged Border"
+       inkscape:menu="Bevels"
+       inkscape:menu-tooltip="Ridged border with inner bevel"
+       style="color-interpolation-filters:sRGB;"
+       id="filter5972">
+      <feMorphology
+         radius="4.3"
+         in="SourceAlpha"
+         result="result91"
+         id="feMorphology5974" />
+      <feComposite
+         operator="out"
+         in="SourceGraphic"
+         in2="result91"
+         id="feComposite5976" />
+      <feGaussianBlur
+         result="result0"
+         stdDeviation="1.2"
+         id="feGaussianBlur5978" />
+      <feDiffuseLighting
+         diffuseConstant="1"
+         id="feDiffuseLighting5980">
+        <feDistantLight
+           elevation="66"
+           azimuth="225"
+           id="feDistantLight5982" />
+      </feDiffuseLighting>
+      <feBlend
+         mode="multiply"
+         in2="SourceGraphic"
+         id="feBlend5984" />
+      <feComposite
+         operator="in"
+         in2="SourceAlpha"
+         id="feComposite5986" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.3255208"
+     inkscape:cx="125.00001"
+     inkscape:cy="931.65494"
+     inkscape:document-units="px"
+     inkscape:current-layer="svg3513"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="711"
+     inkscape:window-x="30"
+     inkscape:window-y="44"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <svg
+       height="320"
+       width="320"
+       id="svg3513"
+       version="1.1"
+       style="filter:url(#filter3855)"
+       inkscape:export-xdpi="166.7"
+       inkscape:export-ydpi="166.7">
+      <circle
+         cx="160"
+         cy="160"
+         r="160"
+         id="circle3515"
+         style="fill:#0000ff;stroke:#000000;filter:url(#filter3855)" />
+    </svg>
+    <svg
+       height="320"
+       width="320"
+       id="whoknows"
+       version="1.1"
+       inkscape:export-xdpi="166.7"
+       inkscape:export-ydpi="166.7">
+       <g id="tickMarks">
+        <rect 
+          id="tickMark0"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"/>
+        <rect
+          id="tickMark1"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(6,160,160)"/>
+        <rect
+          id="tickMark2"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(12,160,160)"/>
+        <rect
+          id="tickMark3"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(18,160,160)"/>
+        <rect
+          id="tickMark4"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(24,160,160)"/>
+        <rect 
+          id="tickMark5"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(30,160,160)"/>
+        <rect
+          id="tickMark6"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(36,160,160)"/>
+        <rect
+          id="tickMark7"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(42,160,160)"/>
+        <rect
+          id="tickMark8"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(48,160,160)"/>
+        <rect
+          id="tickMark9"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(54,160,160)"/>
+        <rect 
+          id="tickMark10"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(60,160,160)"/>
+        <rect
+          id="tickMark11"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(66,160,160)"/>
+        <rect
+          id="tickMark12"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(72,160,160)"/>
+        <rect
+          id="tickMark13"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(78,160,160)"/>
+        <rect
+          id="tickMark14"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(84,160,160)"/>
+        <rect 
+          id="tickMark15"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(90,160,160)"/>
+        <rect
+          id="tickMark16"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(96,160,160)"/>
+        <rect
+          id="tickMark17"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(102,160,160)"/>
+        <rect
+          id="tickMark18"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(108,160,160)"/>
+        <rect
+          id="tickMark19"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(114,160,160)"/>
+        <rect 
+          id="tickMark20"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(120,160,160)"/>
+        <rect
+          id="tickMark21"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(126,160,160)"/>
+        <rect
+          id="tickMark22"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(132,160,160)"/>
+        <rect
+          id="tickMark23"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(138,160,160)"/>
+
+        <!-- <rect
+          x="0"
+          y="290"
+          height="30px"
+          width="320px"
+          fill="black"/> -->
+        
+        <path 
+          d="M238.66968 270.0 L 245.9351 280.0 L 248.4351 280.0 L 241.16968 270.0"
+          fill="white" />
+        <!-- <rect
+          id="tickMark24"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="red"
+          transform="rotate(144,160,160)"/> -->
+
+        <path 
+          d="M214.73503 260.0 L 232.05554 290.0 L 238.05554 290.0 L 220.73503 260.0"
+          fill="white" />
+        <!-- <rect 
+          id="tickMark25"
+          x="157.5"
+          y="8"
+          height="30px"
+          width="5px"
+          fill="red"
+          transform="rotate(150,160,160)"/> -->
+
+        <path 
+          d="M207.72516 270.0 L 212.17744 280.0 L 214.67744 280.0 L 210.22516 270.0"
+          fill="white" />
+        <path 
+          d="M194.49117 270.0 L 197.74036 280.0 L 200.24036 280.0 L 196.99117 270.0"
+          fill="white" />
+        <path 
+          d="M182.13123 270.0 L 184.25679 280.0 L 186.75679 280.0 L 184.63123 270.0"
+          fill="white" />
+        <path 
+          d="M170.31146 270.0 L 171.3625 280.0 L 173.8625 280.0 L 172.81146 270.0"
+          fill="white" />
+        <path 
+          d="M157.0 260.0 L 157.0 290.0 L 163.0 290.0 L 163.0 260.0"
+          fill="white" />
+        <!-- <rect 
+          id="tickMark30"
+          x="157.5"
+          y="30"
+          height="30px"
+          width="5px"
+          fill="red"
+          transform="rotate(180,160,160)"/> -->
+        <path 
+          d="M147.18854 270.0 L 146.1375 280.0 L 148.6375 280.0 L 149.68854 270.0"
+          fill="white" />      
+        <path 
+          d="M135.36877 270.0 L 133.24321 280 L 135.74321 280.0 L 137.86877 270.0"
+          fill="white" />
+        <path 
+          d="M123.008835 270.0 L 119.759636 280.0 L 122.259636 280.0 L 125.508835 270.0"
+          fill="white" />
+        <path 
+          d="M109.77484 270.0 L 105.322556 280.0 L 107.822556 280.0 L 112.27484 270.0"
+          fill="white" />
+        <path 
+          d="M99.26497 260.0 L 81.944466 290.0 L 87.944466 290.0 L 105.26497 260.0"
+          fill="white" />
+        <!-- <rect 
+          id="tickMark25"
+          x="157.5"
+          y="8"
+          height="30px"
+          width="5px"
+          fill="red"
+          transform="rotate(210,160,160)"/> -->
+        <path 
+          d="M78.83032 270.0 L 71.564896 280.0 L 74.064896 280.0 L 81.33032 270.0"
+          fill="white" />
+        
+
+
+
+        <rect
+          id="tickMark37"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-138,160,160)"/>
+        <rect
+          id="tickMark38"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-132,160,160)"/>
+        <rect
+          id="tickMark39"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-126,160,160)"/>
+        <rect 
+          id="tickMark40"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(-120,160,160)"/>
+        <rect
+          id="tickMark41"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-114,160,160)"/>
+        <rect
+          id="tickMark42"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-108,160,160)"/>
+        <rect
+          id="tickMark43"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-102,160,160)"/>
+        <rect
+          id="tickMark44"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-96,160,160)"/>
+        <rect 
+          id="tickMark45"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(-90,160,160)"/>
+        <rect
+          id="tickMark46"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-84,160,160)"/>
+        <rect
+          id="tickMark47"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-78,160,160)"/>
+        <rect
+          id="tickMark48"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-72,160,160)"/>
+        <rect
+          id="tickMark49"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-66,160,160)"/>
+        <rect 
+          id="tickMark50"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(-60,160,160)"/>
+        <rect
+          id="tickMark51"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-54,160,160)"/>
+        <rect
+          id="tickMark52"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-48,160,160)"/>
+        <rect
+          id="tickMark53"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-42,160,160)"/>
+        <rect
+          id="tickMark54"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-36,160,160)"/>
+        <rect 
+          id="tickMark55"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(-30,160,160)"/>
+        <rect
+          id="tickMark56"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-24,160,160)"/>
+        <rect
+          id="tickMark57"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-18,160,160)"/>
+        <rect
+          id="tickMark58"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-12,160,160)"/>
+        <rect
+          id="tickMark59"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-6,160,160)"/>
+        </g>
+
+
+     </svg>
+  </g>
+</svg>

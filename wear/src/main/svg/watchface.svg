@@ -1,0 +1,1182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="watchface.svg">
+  <defs
+     id="defs4">
+    <filter
+       inkscape:label="Film Grain"
+       inkscape:menu="Image Effects"
+       inkscape:menu-tooltip="Adds a small scale graininess"
+       style="color-interpolation-filters:sRGB;"
+       id="filter3855"
+       x="-0.10000000000000002">
+      <feTurbulence
+         type="fractalNoise"
+         numOctaves="5"
+         baseFrequency="0.0049999999999999515 1"
+         seed="0"
+         result="result0"
+         id="feTurbulence3857" />
+      <feColorMatrix
+         result="result4"
+         values="0"
+         type="saturate"
+         id="feColorMatrix3859" />
+      <feComposite
+         in="SourceGraphic"
+         in2="result4"
+         operator="arithmetic"
+         k1="0.29999999999999999"
+         k2="0.69999999999999996"
+         k3="0.14999999999999999"
+         result="result2"
+         id="feComposite3861"
+         k4="0.050000000000000003" />
+      <feBlend
+         result="result5"
+         mode="normal"
+         in="result2"
+         in2="SourceGraphic"
+         id="feBlend3863" />
+      <feComposite
+         in="result5"
+         in2="SourceGraphic"
+         operator="in"
+         result="result3"
+         id="feComposite3865" />
+    </filter>
+    <filter
+       inkscape:label="Matte Ridge"
+       inkscape:menu="Ridges"
+       inkscape:menu-tooltip="Soft pastel ridge"
+       style="color-interpolation-filters:sRGB;"
+       id="filter4069">
+      <feGaussianBlur
+         stdDeviation="0.5"
+         result="result1"
+         id="feGaussianBlur4071" />
+      <feBlend
+         in="SourceGraphic"
+         mode="normal"
+         result="result5"
+         in2="result1"
+         id="feBlend4073" />
+      <feGaussianBlur
+         stdDeviation="3"
+         result="result6"
+         in="result5"
+         id="feGaussianBlur4075" />
+      <feComposite
+         operator="xor"
+         in="result6"
+         in2="result6"
+         result="result8"
+         id="feComposite4077" />
+      <feComposite
+         operator="in"
+         result="fbSourceGraphic"
+         in="result6"
+         in2="result8"
+         id="feComposite4079" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0 "
+         id="feColorMatrix4081" />
+      <feGaussianBlur
+         result="result0"
+         in="fbSourceGraphic"
+         stdDeviation="0.5"
+         id="feGaussianBlur4083" />
+      <feSpecularLighting
+         specularExponent="55"
+         specularConstant="2"
+         surfaceScale="2"
+         lighting-color="rgb(255,255,255)"
+         result="result1"
+         in="result0"
+         id="feSpecularLighting4085">
+        <fePointLight
+           z="20000"
+           y="-10000"
+           x="-5000"
+           id="fePointLight4087" />
+      </feSpecularLighting>
+      <feComposite
+         operator="arithmetic"
+         result="result2"
+         in="result1"
+         in2="fbSourceGraphicAlpha"
+         k1="1"
+         id="feComposite4089" />
+      <feComposite
+         k3="1"
+         k2="0.5"
+         operator="arithmetic"
+         result="result4"
+         in="fbSourceGraphic"
+         in2="result2"
+         id="feComposite4091" />
+      <feComposite
+         operator="over"
+         in="result9"
+         in2="result4"
+         result="result91"
+         id="feComposite4093" />
+      <feBlend
+         mode="screen"
+         in2="result91"
+         id="feBlend4095" />
+    </filter>
+    <filter
+       inkscape:label="Ridged Border"
+       inkscape:menu="Bevels"
+       inkscape:menu-tooltip="Ridged border with inner bevel"
+       style="color-interpolation-filters:sRGB;"
+       id="filter5972">
+      <feMorphology
+         radius="4.3"
+         in="SourceAlpha"
+         result="result91"
+         id="feMorphology5974" />
+      <feComposite
+         operator="out"
+         in="SourceGraphic"
+         in2="result91"
+         id="feComposite5976" />
+      <feGaussianBlur
+         result="result0"
+         stdDeviation="1.2"
+         id="feGaussianBlur5978" />
+      <feDiffuseLighting
+         diffuseConstant="1"
+         id="feDiffuseLighting5980">
+        <feDistantLight
+           elevation="66"
+           azimuth="225"
+           id="feDistantLight5982" />
+      </feDiffuseLighting>
+      <feBlend
+         mode="multiply"
+         in2="SourceGraphic"
+         id="feBlend5984" />
+      <feComposite
+         operator="in"
+         in2="SourceAlpha"
+         id="feComposite5986" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.3255208"
+     inkscape:cx="125.00001"
+     inkscape:cy="931.65494"
+     inkscape:document-units="px"
+     inkscape:current-layer="svg3513"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="711"
+     inkscape:window-x="30"
+     inkscape:window-y="44"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <svg
+       height="320"
+       width="320"
+       id="svg3513"
+       version="1.1"
+       style="filter:url(#filter3855)"
+       inkscape:export-xdpi="166.7"
+       inkscape:export-ydpi="166.7">
+      <circle
+         cx="160"
+         cy="160"
+         r="160"
+         id="circle3515"
+         style="fill:#0000ff;stroke:#000000;filter:url(#filter3855)" />
+      <circle
+         cx="160"
+         cy="-90.500206"
+         r="45"
+         id="circle4277"
+         style="fill:#808080"
+         transform="scale(1,-1)" />
+       <!-- <image
+         y="0.00020472441"
+         x="4.7683716e-07"
+         id="image4246"
+         xlink:href="data:image/png;base64,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 "
+         preserveAspectRatio="none"
+         height="320"
+         width="320" />
+        --><circle
+         cx="91"
+         cy="-160"
+         r="45"
+         id="circle3516"
+         style="fill:#808080"
+         transform="scale(1,-1)" />
+      <circle
+         cx="229"
+         cy="-160"
+         r="45"
+         id="circle4279"
+         style="fill:#808080"
+         transform="scale(1,-1)" />
+    </svg>
+    <svg
+       height="320"
+       width="320"
+       id="whoknows"
+       version="1.1"
+       inkscape:export-xdpi="166.7"
+       inkscape:export-ydpi="166.7">
+      <g id="batteryGauge">
+        <g id="watchIcon">
+            <ellipse id="watchIconCircle"
+              cy="72"
+              cx="160"
+              style="fill:none;stroke:#ffffff;stroke-width:2"
+              rx="5"
+              ry="5" />
+            <rect
+              id="watchIconLeftSqure"
+              width="6"
+              height="6"
+              x="149.5"
+              y="68.5"
+              style="fill:#ffffff" />
+            <rect
+              id="watchIconRightSqure"
+              width="5.9999952"
+              height="6.0000005"
+              x="165"
+              y="68.5"
+              style="fill:#ffffff" />
+        </g>
+        <g id="phoneIcon">
+          <rect
+             id="phoneIconSquare"
+             width="17"
+             height="10"
+             x="151.5"
+             y="105"
+             rx="1"
+             ry="1"
+             style="fill:none;stroke:#ffffff;stroke-width:2" />
+          <rect
+             id="phoneIconBaseSquare"
+             width="4"
+             height="10"
+             x="151.5"
+             y="105"
+             style="fill:#ffffff" />
+
+          <ellipse
+             id="circle5591"
+             cx="153"
+             cy="110.5"
+             style="fill:#000000"
+             rx="1"
+             ry="1" />
+        </g>
+        <!-- Watch Battery Tick Marks -->
+        <g id="watchBatteryGauge">
+          <path
+             id="watchBatteryArc"
+             d="m 125,74 a 39,39 0 0 1 70,0"
+             stroke-width="2"
+             stroke="white"
+             fill="none" />
+          <rect
+             id="watch0PercentTick"
+             width="2"
+             height="8"
+             x="159"
+             y="52"
+             transform="rotate(-62.5, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch5PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(-56.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch10PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(-50, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch15PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(-43.75, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch20PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(-37.5, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch25PercentTick"
+             width="2"
+             height="8"
+             x="159"
+             y="52"
+             transform="rotate(-31.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch30PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(-25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch35PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(-18.75, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch40PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(-12.5, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch45PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(-6.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch50PercentTick"
+             width="2"
+             height="8"
+             x="159"
+             y="52"
+             style="fill:#ffffff" />
+          <rect
+             id="watch55PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(6.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch60PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(12.5, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch65PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(18.75, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch70PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch75PercentTick"
+             width="2"
+             height="8"
+             x="159"
+             y="52"
+             transform="rotate(31.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch80PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(37.5, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch85PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(43.75, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch90PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(50, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch95PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="54"
+             transform="rotate(56.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="watch100PercentTick"
+             width="2"
+             height="8"
+             x="159"
+             y="52"
+             transform="rotate(62.5, 160,91)"
+             style="fill:#ffffff" />
+           </g>
+        <!-- Mobile Battery Tick Marks -->
+        <g id="mobileBatteryGauge">
+          <path
+            id="mobileBatteryArc"
+            d="m 125,108 a 39,39 0 0 0 70,0"
+            inkscape:connector-curvature="0"
+            style="fill:none;stroke:#ffffff;stroke-width:2" />
+          <rect
+             id="mobile0PercentTick"
+             width="2"
+             height="8"
+             x="159"
+             y="122"
+             transform="rotate(-62.5, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile5PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(-56.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile10PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(-50, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile15PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(-43.75, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile20PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(-37.5, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile25PercentTick"
+             width="2"
+             height="8"
+             x="159"
+             y="122"
+             transform="rotate(-31.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile30PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(-25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile35PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(-18.75, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile40PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(-12.5, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile45PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(-6.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile50PercentTick"
+             width="2"
+             height="8"
+             x="159"
+             y="122"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile55PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(6.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile60PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(12.5, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile65PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(18.75, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile70PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile75PercentTick"
+             width="2"
+             height="8"
+             x="159"
+             y="122"
+             transform="rotate(31.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile80PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(37.5, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile85PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(43.75, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile90PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(50, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile95PercentTick"
+             width="1"
+             height="4"
+             x="159.5"
+             y="124"
+             transform="rotate(56.25, 160,91)"
+             style="fill:#ffffff" />
+          <rect
+             id="mobile100PercentTick"
+             width="2"
+             height="8"
+             x="159"
+             y="122"
+             transform="rotate(62.5, 160,91)"
+             style="fill:#ffffff" />
+        </g>
+      </g>
+    <circle
+       cx="69"
+       cy="0.5"
+       r="45"
+       id="circle4285"
+       style="fill:#808080;filter:url(#filter4069)"
+       transform="matrix(0.99999918,0,0,-1,91.168577,90.263255)" />
+    <circle
+       cx="0"
+       cy="69.5"
+       r="45"
+       id="circle4067"
+       style="fill:#808080;filter:url(#filter4069)"
+       transform="matrix(0.99999918,0,0,-1,229.30103,227.96275)" />
+    <circle
+       cx="-69"
+       cy="0.5"
+       r="45"
+       id="circle4283"
+       style="fill:#808080;filter:url(#filter4069)"
+       transform="matrix(0.99999918,0,0,-1,161.3999,159.7882)" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5972)"
+       id="dateText"
+       sodipodi:linespacing="125%"
+       ><textPath
+         xlink:href="#circleDateText"
+         id="textPath5669"><tspan
+   id="tspan5664"
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#ffffff"> SUN  MON  TUE  WED  THU  FRI  SAT</tspan></textPath></text>
+    <circle
+       id="circleDateText"
+       cx="91"
+       cy="160"
+       fill="none"
+       r="33" />
+    <circle
+       id="circleDateSelector"
+       cx="91"
+       cy="160"
+       stroke-width="2px"
+       stroke="white"
+       fill="none"
+       r="28" />
+       <g id="tickMarks">
+        <rect 
+          id="tickMark0"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"/>
+        <rect
+          id="tickMark1"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(6,160,160)"/>
+        <rect
+          id="tickMark2"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(12,160,160)"/>
+        <rect
+          id="tickMark3"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(18,160,160)"/>
+        <rect
+          id="tickMark4"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(24,160,160)"/>
+        <rect 
+          id="tickMark5"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(30,160,160)"/>
+        <rect
+          id="tickMark6"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(36,160,160)"/>
+        <rect
+          id="tickMark7"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(42,160,160)"/>
+        <rect
+          id="tickMark8"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(48,160,160)"/>
+        <rect
+          id="tickMark9"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(54,160,160)"/>
+        <rect 
+          id="tickMark10"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(60,160,160)"/>
+        <rect
+          id="tickMark11"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(66,160,160)"/>
+        <rect
+          id="tickMark12"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(72,160,160)"/>
+        <rect
+          id="tickMark13"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(78,160,160)"/>
+        <rect
+          id="tickMark14"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(84,160,160)"/>
+        <rect 
+          id="tickMark15"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(90,160,160)"/>
+        <rect
+          id="tickMark16"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(96,160,160)"/>
+        <rect
+          id="tickMark17"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(102,160,160)"/>
+        <rect
+          id="tickMark18"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(108,160,160)"/>
+        <rect
+          id="tickMark19"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(114,160,160)"/>
+        <rect 
+          id="tickMark20"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(120,160,160)"/>
+        <rect
+          id="tickMark21"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(126,160,160)"/>
+        <rect
+          id="tickMark22"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(132,160,160)"/>
+        <rect
+          id="tickMark23"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(138,160,160)"/>
+
+        <!-- <rect
+          x="0"
+          y="290"
+          height="30px"
+          width="320px"
+          fill="black"/> -->
+        
+        <path 
+          d="M238.66968 270.0 L 245.9351 280.0 L 248.4351 280.0 L 241.16968 270.0"
+          fill="white" />
+        <!-- <rect
+          id="tickMark24"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="red"
+          transform="rotate(144,160,160)"/> -->
+
+        <path 
+          d="M214.73503 260.0 L 232.05554 290.0 L 238.05554 290.0 L 220.73503 260.0"
+          fill="white" />
+        <!-- <rect 
+          id="tickMark25"
+          x="157.5"
+          y="8"
+          height="30px"
+          width="5px"
+          fill="red"
+          transform="rotate(150,160,160)"/> -->
+
+        <path 
+          d="M207.72516 270.0 L 212.17744 280.0 L 214.67744 280.0 L 210.22516 270.0"
+          fill="white" />
+        <path 
+          d="M194.49117 270.0 L 197.74036 280.0 L 200.24036 280.0 L 196.99117 270.0"
+          fill="white" />
+        <path 
+          d="M182.13123 270.0 L 184.25679 280.0 L 186.75679 280.0 L 184.63123 270.0"
+          fill="white" />
+        <path 
+          d="M170.31146 270.0 L 171.3625 280.0 L 173.8625 280.0 L 172.81146 270.0"
+          fill="white" />
+        <path 
+          d="M157.0 260.0 L 157.0 290.0 L 163.0 290.0 L 163.0 260.0"
+          fill="white" />
+        <!-- <rect 
+          id="tickMark30"
+          x="157.5"
+          y="30"
+          height="30px"
+          width="5px"
+          fill="red"
+          transform="rotate(180,160,160)"/> -->
+        <path 
+          d="M147.18854 270.0 L 146.1375 280.0 L 148.6375 280.0 L 149.68854 270.0"
+          fill="white" />      
+        <path 
+          d="M135.36877 270.0 L 133.24321 280 L 135.74321 280.0 L 137.86877 270.0"
+          fill="white" />
+        <path 
+          d="M123.008835 270.0 L 119.759636 280.0 L 122.259636 280.0 L 125.508835 270.0"
+          fill="white" />
+        <path 
+          d="M109.77484 270.0 L 105.322556 280.0 L 107.822556 280.0 L 112.27484 270.0"
+          fill="white" />
+        <path 
+          d="M99.26497 260.0 L 81.944466 290.0 L 87.944466 290.0 L 105.26497 260.0"
+          fill="white" />
+        <!-- <rect 
+          id="tickMark25"
+          x="157.5"
+          y="8"
+          height="30px"
+          width="5px"
+          fill="red"
+          transform="rotate(210,160,160)"/> -->
+        <path 
+          d="M78.83032 270.0 L 71.564896 280.0 L 74.064896 280.0 L 81.33032 270.0"
+          fill="white" />
+        
+
+
+
+        <rect
+          id="tickMark37"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-138,160,160)"/>
+        <rect
+          id="tickMark38"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-132,160,160)"/>
+        <rect
+          id="tickMark39"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-126,160,160)"/>
+        <rect 
+          id="tickMark40"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(-120,160,160)"/>
+        <rect
+          id="tickMark41"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-114,160,160)"/>
+        <rect
+          id="tickMark42"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-108,160,160)"/>
+        <rect
+          id="tickMark43"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-102,160,160)"/>
+        <rect
+          id="tickMark44"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-96,160,160)"/>
+        <rect 
+          id="tickMark45"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(-90,160,160)"/>
+        <rect
+          id="tickMark46"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-84,160,160)"/>
+        <rect
+          id="tickMark47"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-78,160,160)"/>
+        <rect
+          id="tickMark48"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-72,160,160)"/>
+        <rect
+          id="tickMark49"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-66,160,160)"/>
+        <rect 
+          id="tickMark50"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(-60,160,160)"/>
+        <rect
+          id="tickMark51"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-54,160,160)"/>
+        <rect
+          id="tickMark52"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-48,160,160)"/>
+        <rect
+          id="tickMark53"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-42,160,160)"/>
+        <rect
+          id="tickMark54"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-36,160,160)"/>
+        <rect 
+          id="tickMark55"
+          x="157.5"
+          y="0"
+          height="30px"
+          width="5px"
+          fill="white"
+          transform="rotate(-30,160,160)"/>
+        <rect
+          id="tickMark56"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-24,160,160)"/>
+        <rect
+          id="tickMark57"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-18,160,160)"/>
+        <rect
+          id="tickMark58"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-12,160,160)"/>
+        <rect
+          id="tickMark59"
+          x="159"
+          y="10"
+          height="10px"
+          width="2px"
+          fill="white"
+          transform="rotate(-6,160,160)"/>
+        </g>
+
+
+     </svg>
+  </g>
+</svg>
