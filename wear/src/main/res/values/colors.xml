@@ -2,6 +2,7 @@
 <resources>
     <color name="background">#333333</color>
     <color name="handShadowColor">#000000</color>
+    <color name="tickColor">#000000</color>
     <color name="handColor">#E5E4E2</color>
     <color name="handTipColor">#C35817</color>
     <color name="accessoryBackGroundColor">#1a1a1a</color>

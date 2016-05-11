@@ -25,7 +25,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -33,8 +32,8 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.wearable.watchface.CanvasWatchFaceService;
+import android.support.wearable.watchface.WatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -50,6 +49,10 @@ import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.DataMapItem;
 import com.google.android.gms.wearable.Wearable;
 
+import net.heatherandkevin.motowatchface.Accessory.DisplayBattery;
+import net.heatherandkevin.motowatchface.Accessory.DisplayCalendar;
+import net.heatherandkevin.motowatchface.Accessory.DisplayWeather;
+import net.heatherandkevin.motowatchface.ClockFace.ClockTick;
 import net.heatherandkevin.motowatchface.clockhand.AccentHand;
 import net.heatherandkevin.motowatchface.clockhand.ClockHand;
 import net.heatherandkevin.motowatchface.clockhand.MainHand;
@@ -59,9 +62,7 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -90,26 +91,20 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
      */
     GoogleApiClient mGoogleApiClient;
     private static final String BATTERY_URI = "/BATTERY_LEVEL";
-    float mobileBatteryPercent = 0;
+    float mobileBatteryPercent = -1f;
 
     private static final String WEATHER_URI = "/WEATHER_STATS";
     private WatchFaceWeather weather;
 
 
     @Override
-    public void onConnected(Bundle bundle) {
-        Log.d("KMAGER","data api connected");
-    }
+    public void onConnected(Bundle bundle) {}
 
     @Override
-    public void onConnectionSuspended(int i) {
-        Log.d("KMAGER","data api suspended");
-    }
+    public void onConnectionSuspended(int i) {}
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-            Log.w("KMAGER", "ERROR Connecting:" + connectionResult.getErrorMessage());
-    }
+    public void onConnectionFailed(ConnectionResult connectionResult) {}
 
     @Override
     public Engine onCreateEngine() {
@@ -124,19 +119,12 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
 
             switch(event.getDataItem().getUri().getPath()) {
                 case BATTERY_URI:
-                    Log.i("KMAGER", "Phone Battery Level: " + map.getFloat("BatteryLevel"));
                     mobileBatteryPercent = map.getFloat("BatteryLevel");
                     break;
                 case WEATHER_URI:
-                    Log.i("KMAGER", "Weather Update");
                     weather = new WatchFaceWeather(map, getResources());
-
                     break;
-                default:
-                    Log.w("KMAGER","Unknown path: " + event.getDataItem().getUri().getPath());
-
             }
-
         }
 
     }
@@ -196,7 +184,7 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
         private ClockHand hourHand;
         private ClockHand minuteHand;
         private ClockHand secondHand;
-        private ClockHand batteryHand;
+
         private float baseMountWidth = 8f;
         private float baseMountSecondWidth = 4f;
         private float baseMountHole = 2f;
@@ -215,16 +203,6 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
         float xCenter;
         float yCenter;
         double handLength;
-        float accessoryCircleSize = 42f;
-        float accessoryOffset;
-
-        /**
-         * Accessory setup
-         * Some are reusable so we only have to create a new instance once
-         */
-        private Map<Integer,String> weekDays = new HashMap<>(7);
-        RectF dayOval;
-        RectF weatherStageOval;
 
         //Setting up paint colors
         Paint mBackgroundPaint;
@@ -233,11 +211,13 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
         Paint mHandBasePaint;
         Paint mHandTipPaint;
         Paint mSecondHandPaint;
-        Paint mAccessoryPaint;
-        Paint mDayNumberPaint;
-        Paint mWeatherPaint;
 
-        Map <Integer,Map<String,Float>> dayLocations;
+        /**
+         * TESTIG FOR STUFF
+         */
+        DisplayCalendar displayCalendar;
+        DisplayWeather displayWeather;
+        DisplayBattery displayBattery;
 
         boolean mAmbient;
 
@@ -289,8 +269,8 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
 
             Resources resources = MotoWatchFace.this.getResources();
 
-            Drawable backgroundDrawable = resources.getDrawable(R.drawable.watchface, null);
-            Drawable backgroundAmbientDrawable = resources.getDrawable(R.drawable.watchfaceambient, null);
+            Drawable backgroundDrawable = resources.getDrawable(R.drawable.watchface2, null);
+            Drawable backgroundAmbientDrawable = resources.getDrawable(R.drawable.watchfaceambient2, null);
             mBackgroundBitmap = ((BitmapDrawable) backgroundDrawable).getBitmap();
             mBackgroundAmbientBitmap = ((BitmapDrawable) backgroundAmbientDrawable).getBitmap();
 
@@ -312,50 +292,37 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
             mSecondHandPaint.setColor(resources.getColor(R.color.secondHandColor));
             mSecondHandPaint.setAntiAlias(true);
 
-            mAccessoryPaint = new Paint();
-            mAccessoryPaint.setColor(resources.getColor(R.color.accessoryColor));
-            mAccessoryPaint.setStrokeWidth(3);
-            mAccessoryPaint.setStyle(Paint.Style.STROKE);
-            mAccessoryPaint.setAntiAlias(true);
-
             hourHand = new MainHand(mHandPaint, mHandTipPaint, hourHandWidth);
             minuteHand = new MainHand(mHandPaint, mHandTipPaint, minuteHandWidth);
             secondHand = new AccentHand(mSecondHandPaint, secondHandWidth, handOffsetLength * 2f);
-            batteryHand = new AccentHand(mSecondHandPaint, secondHandWidth, 0f);
 
             calendar = new GregorianCalendar(TimeZone.getDefault());
+        }
 
-            //weekday accessory
-            mDayNumberPaint = new Paint();
-            mDayNumberPaint.setColor(resources.getColor(R.color.dayColor));
-            mDayNumberPaint.setTextAlign(Paint.Align.CENTER);
-            mDayNumberPaint.setTextSize(34);
-            mDayNumberPaint.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/AC.ttf"));
-            mDayNumberPaint.setShadowLayer(5f, 0f, 0f, resources.getColor(R.color.handShadowColor));
-            mDayNumberPaint.setAntiAlias(true);
+        @Override
+        public void onTapCommand(
+                @TapType int tapType, int x, int y, long eventTime) {
+            switch (tapType) {
+                case WatchFaceService.TAP_TYPE_TAP:
+                case WatchFaceService.TAP_TYPE_TOUCH:
+                    Log.i("KMAGER", "TAP_TYPE_TOUCH");
+                    if ( displayWeather.accessoryTap(x,y) || displayBattery.accessoryTap(x,y)) {
+                        Log.i("KMAGER", "WE TAPPED ONE OF THE ACCESSORIES");
+                        if (mobileBatteryPercent < 0f || weather == null) {
+                            Log.i("KMAGER","ACCESSORY TAPPED AND NEEDS HELP");
+                        }
+                    }
+                    break;
 
-            mWeatherPaint = new Paint(mDayNumberPaint);
-            mWeatherPaint.setTextSize(24);
+                case WatchFaceService.TAP_TYPE_TOUCH_CANCEL:
+                    Log.i("KMAGER", "TAP_TYPE_TOUCH_CANCEL");
+                    break;
 
-            weekDays.put(7, "SAT");
-            weekDays.put(6, "FRI");
-            weekDays.put(5, "THU");
-            weekDays.put(4, "WED");
-            weekDays.put(3, "TUE");
-            weekDays.put(2, "MON");
-            weekDays.put(1, "SUN");
-            dayLocations = calculateDateLocation();
-
-            //THIS STUFF WILL BE DELETED SOON
-            DataMap test = new DataMap();
-            test.putString("icon", "10n");
-            test.putFloat("temp", 49.41f);
-            test.putFloat("high",49.41f);
-            test.putFloat("low", 49.41f);
-            test.putLong("sunrise", 1462010851);
-            test.putLong("sunset", 1462060728);
-            weather = new WatchFaceWeather(test, getResources());
-            //END DELETED STUFF
+                default:
+                    Log.i("KMAGER", "DEFAULT");
+                    super.onTapCommand(tapType, x, y, eventTime);
+                    break;
+            }
         }
 
         @Override
@@ -428,72 +395,30 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
             //draw background
             canvas.drawBitmap(mBackgroundScaledBitmap, 0, 0, null);
 
-            //display other information
             if (!isInAmbientMode()) {
-                accessoryOffset = (yCenter - hourTickHeight + baseMountWidth) /2f;
-
-
-                //draw weather
-                if ( weatherStageOval == null ) {
-                    weatherStageOval = new RectF(xCenter + accessoryOffset - accessoryCircleSize,
-                            yCenter - accessoryCircleSize,
-                            xCenter + accessoryOffset + accessoryCircleSize,
-                            yCenter + accessoryCircleSize);
+                if (displayCalendar == null) {
+                    displayCalendar = new DisplayCalendar(getResources().getColor(R.color.accessoryColor),
+                            getResources().getColor(R.color.dayColor),
+                            Typeface.createFromAsset(getAssets(), "fonts/AC.ttf"),
+                            faceHeight,
+                            faceWidth);
                 }
+                displayCalendar.display(canvas, calendar.get(Calendar.DAY_OF_WEEK), calendar.get(Calendar.DAY_OF_MONTH));
 
-                if (weather != null){
-                    //TODO
-                    canvas.drawBitmap(weather.getIconBitMap(),
-                            xCenter + accessoryOffset - weather.getIconBitMap().getWidth() / 2f,
-                            yCenter - weather.getIconBitMap().getHeight() + 10f,
-                            null);
-
-                    canvas.drawText(String.format("%.1f" + (char) 0x00B0, weather.getTemp()),
-                            xCenter + accessoryOffset,
-                            yCenter + 23,
-                            mWeatherPaint);
-
-                    canvas.drawArc(weatherStageOval,
-                            -90,
-                            -360f * weather.percentLeftInStage(System.currentTimeMillis() / 1000),
-                            false,
-                            weather.getPercentPaint(System.currentTimeMillis() / 1000));
+                if (displayWeather == null) {
+                    displayWeather = new DisplayWeather(getResources().getColor(R.color.dayColor),
+                            Typeface.createFromAsset(getAssets(), "fonts/AC.ttf"),
+                            faceHeight,
+                            faceWidth);
                 }
+                displayWeather.display(canvas, weather);
 
-                //draw week day
-                if ( dayOval == null ) {
-                    dayOval = new RectF(xCenter - accessoryOffset - accessoryCircleSize + 12f,
-                            yCenter - accessoryCircleSize + 8f,
-                            xCenter - accessoryOffset + accessoryCircleSize - 9f,
-                            yCenter + accessoryCircleSize - 14f);
+                if (displayBattery == null) {
+                    displayBattery = new DisplayBattery(getResources().getColor(R.color.secondHandColor),
+                            faceHeight,
+                            faceWidth);
                 }
-
-                //DRAW THE DAY
-                canvas.drawArc(dayOval,
-                        dayLocations.get(calendar.get(Calendar.DAY_OF_WEEK)).get("start"),
-                        dayLocations.get(calendar.get(Calendar.DAY_OF_WEEK)).get("length"),
-                        false,
-                        mAccessoryPaint);
-
-                //Add the  date in text
-                canvas.drawText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)),
-                        xCenter - accessoryOffset + 2f,
-                        yCenter + 12,
-                        mDayNumberPaint);
-
-                //Draw wear battery level
-                angle = ((batteryPercent-0.5f)*125f);
-                batteryHand.setHandLength(accessoryCircleSize - 4f);
-                batteryHand.drawHand(canvas, xCenter, yCenter - accessoryOffset, angle);
-
-                //Draw Phone battery level
-                angle = ((0.5f - mobileBatteryPercent)*125f) + 180f;
-                batteryHand.setHandLength(accessoryCircleSize - 4f);
-                batteryHand.drawHand(canvas, xCenter, yCenter - accessoryOffset, angle);
-
-                //cap it off with a circle
-                canvas.drawCircle(xCenter, yCenter - accessoryOffset,
-                        baseMountSecondWidth, mSecondHandPaint);
+                displayBattery.display(canvas, batteryPercent, mobileBatteryPercent);
             }
 
             // draw hours / minute / second hands
@@ -617,36 +542,6 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
                         - (timeMs % INTERACTIVE_UPDATE_RATE_MS);
                 mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs);
             }
-        }
-
-        private Map<Integer,Map<String,Float>> calculateDateLocation(){
-            Map <Integer,Map<String,Float>> dayLocations = new HashMap<>(weekDays.size());
-            float dayPercent = 360f/(float)weekDays.size();
-
-            Map<Integer,Float> textSize = new HashMap<>(weekDays.size());
-            float max=0f;
-            for(int count=1;count<=weekDays.size();count++) {
-                textSize.put(count, mAccessoryPaint.measureText(weekDays.get(count)));
-                max = (max < textSize.get(count)) ? textSize.get(count) : max;
-            }
-
-            float lastEnd=0;
-            for(int count=1;count<=weekDays.size();count++) {
-                lastEnd+=dayPercent * textSize.get(count) / max;
-            }
-
-            float extra=(360f-lastEnd) / (float)weekDays.size();
-
-            lastEnd=0;
-            for(int count=1;count<=weekDays.size();count++) {
-                dayLocations.put(count, new HashMap<String, Float>());
-                dayLocations.get(count).put("start", lastEnd);
-                dayLocations.get(count).put("length"
-                        ,dayPercent * textSize.get(count) / max + extra);
-                lastEnd+=dayLocations.get(count).get("length");
-            }
-
-            return dayLocations;
         }
     }
 }
