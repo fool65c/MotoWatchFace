@@ -1,7 +1,9 @@
-package net.heatherandkevin.motowatchface.clockhand;
+package net.heatherandkevin.motowatchface.clockhand.DisplayClockHand;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+
+import net.heatherandkevin.motowatchface.clockhand.ClockHand;
 
 /**
  * Created by kmager on 4/7/16.

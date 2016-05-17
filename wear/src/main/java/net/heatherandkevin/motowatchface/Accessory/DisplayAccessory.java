@@ -1,15 +1,31 @@
 package net.heatherandkevin.motowatchface.Accessory;
 
+import android.graphics.Canvas;
 import android.graphics.RectF;
 
 /**
  * Created by kmager on 5/1/16.
  */
-public class DisplayAccessory {
+public abstract class DisplayAccessory {
     private final float OUTER_OFFSET = 30.0f;
     private final float INNER_OFFSET = 8.0f;
     protected final float ACCESSORY_CIRCLE_SIZE = 42f;
     protected final float STROKE = 3f;
+
+    protected int faceHeight;
+    protected int faceWidth;
+
+    protected abstract void init();
+    public abstract void display(Canvas canvas);
+
+    public void setFaceDimensions(int faceHeight, int faceWidth) {
+        if (this.faceHeight != faceHeight || this.faceWidth != faceWidth) {
+            this.faceHeight = faceHeight;
+            this.faceWidth = faceWidth;
+            init();
+        }
+    }
+
 
     protected float calculateXCenter(AccessoryPosition position, int faceWidth) {
         float xCenter;

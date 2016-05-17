@@ -49,13 +49,12 @@ import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.DataMapItem;
 import com.google.android.gms.wearable.Wearable;
 
-import net.heatherandkevin.motowatchface.Accessory.DisplayBattery;
-import net.heatherandkevin.motowatchface.Accessory.DisplayCalendar;
-import net.heatherandkevin.motowatchface.Accessory.DisplayWeather;
-import net.heatherandkevin.motowatchface.ClockFace.ClockTick;
-import net.heatherandkevin.motowatchface.clockhand.AccentHand;
+import net.heatherandkevin.motowatchface.Accessory.Display.DisplayBattery;
+import net.heatherandkevin.motowatchface.Accessory.Display.DisplayCalendar;
+import net.heatherandkevin.motowatchface.Accessory.Display.DisplayWeather;
+import net.heatherandkevin.motowatchface.clockhand.DisplayClockHand.AccentHand;
 import net.heatherandkevin.motowatchface.clockhand.ClockHand;
-import net.heatherandkevin.motowatchface.clockhand.MainHand;
+import net.heatherandkevin.motowatchface.clockhand.DisplayClockHand.MainHand;
 import net.heatherandkevin.motowatchface.domain.WatchFaceWeather;
 
 import java.lang.ref.WeakReference;
@@ -70,10 +69,7 @@ import java.util.concurrent.TimeUnit;
  * Analog watch face with a ticking second hand. In ambient mode, the second hand isn't shown. On
  * devices with low-bit ambient mode, the hands are drawn without anti-aliasing in ambient mode.
  */
-public class MotoWatchFace extends CanvasWatchFaceService implements
-        DataApi.DataListener,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener
+public class MotoWatchFace extends CanvasWatchFaceService
 {
     /**
      * Update rate in milliseconds for interactive mode. We update once a second to advance the
@@ -86,52 +82,10 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
      */
     private static final int MSG_UPDATE_TIME = 0;
 
-    /**
-     * Begin GoogleApiClient operations
-     */
-    GoogleApiClient mGoogleApiClient;
-    private static final String BATTERY_URI = "/BATTERY_LEVEL";
-    float mobileBatteryPercent = -1f;
-
-    private static final String WEATHER_URI = "/WEATHER_STATS";
-    private WatchFaceWeather weather;
-
-
-    @Override
-    public void onConnected(Bundle bundle) {}
-
-    @Override
-    public void onConnectionSuspended(int i) {}
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {}
-
     @Override
     public Engine onCreateEngine() {
         return new Engine();
     }
-
-    @Override
-    public void onDataChanged(DataEventBuffer dataEvents) {
-        final List<DataEvent> events = FreezableUtils.freezeIterable(dataEvents);
-        for (DataEvent event : events) {
-            final DataMap map = DataMapItem.fromDataItem(event.getDataItem()).getDataMap();
-
-            switch(event.getDataItem().getUri().getPath()) {
-                case BATTERY_URI:
-                    mobileBatteryPercent = map.getFloat("BatteryLevel");
-                    break;
-                case WEATHER_URI:
-                    weather = new WatchFaceWeather(map, getResources());
-                    break;
-            }
-        }
-
-    }
-
-    /**
-     * END GoogleApiClient operations
-     */
 
     private static class EngineHandler extends Handler {
         private final WeakReference<MotoWatchFace.Engine> mWeakReference;
@@ -153,7 +107,11 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
         }
     }
 
-    private class Engine extends CanvasWatchFaceService.Engine {
+    private class Engine extends CanvasWatchFaceService.Engine  implements
+            DataApi.DataListener,
+            GoogleApiClient.ConnectionCallbacks,
+            GoogleApiClient.OnConnectionFailedListener
+    {
         final Handler mUpdateTimeHandler = new EngineHandler(this);
         boolean mRegisteredTimeZoneReceiver = false;
         boolean mRegisteredBatteryLevelReceiver = false;
@@ -164,7 +122,6 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
          * Bitmap testing
          */
         private Bitmap mBackgroundBitmap;
-        private Bitmap mBackgroundAmbientBitmap;
         private Bitmap mBackgroundScaledBitmap;
 
 
@@ -198,8 +155,6 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
         /**
          * onDraw reusable items
          */
-        int faceWidth;
-        int faceHeight;
         float xCenter;
         float yCenter;
         double handLength;
@@ -215,7 +170,7 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
         /**
          * TESTIG FOR STUFF
          */
-        DisplayCalendar displayCalendar;
+            DisplayCalendar displayCalendar;
         DisplayWeather displayWeather;
         DisplayBattery displayBattery;
 
@@ -229,13 +184,12 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
             }
         };
 
-        float batteryPercent;
         final BroadcastReceiver mBatteryLevelReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
                 int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-                batteryPercent = level / (float)scale;
+                displayBattery.setWearBatteryLevels(level / (float)scale);
             }
         };
 
@@ -245,6 +199,48 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
          */
         boolean mLowBitAmbient;
 
+
+        /**
+         * Begin GoogleApiClient operations
+         */
+        GoogleApiClient mGoogleApiClient;
+        private static final String BATTERY_URI = "/BATTERY_LEVEL";
+
+        private static final String WEATHER_URI = "/WEATHER_STATS";
+
+
+        @Override
+        public void onConnected(Bundle bundle) {}
+
+        @Override
+        public void onConnectionSuspended(int i) {}
+
+        @Override
+        public void onConnectionFailed(ConnectionResult connectionResult) {}
+
+        @Override
+        public void onDataChanged(DataEventBuffer dataEvents) {
+            final List<DataEvent> events = FreezableUtils.freezeIterable(dataEvents);
+            for (DataEvent event : events) {
+                final DataMap map = DataMapItem.fromDataItem(event.getDataItem()).getDataMap();
+
+                switch(event.getDataItem().getUri().getPath()) {
+                    case BATTERY_URI:
+                        displayBattery.setMobileBatteryPercent(map.getFloat("BatteryLevel"));
+
+                        break;
+                    case WEATHER_URI:
+                        displayWeather.setWeather(new WatchFaceWeather(map, getResources()));
+                        break;
+                }
+            }
+
+        }
+
+        /**
+         * END GoogleApiClient operations
+         */
+
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
@@ -253,12 +249,12 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
             //Connect the GoogleApiClient
             mGoogleApiClient = new GoogleApiClient.Builder(MotoWatchFace.this)
                     .addApi(Wearable.API)
-                    .addConnectionCallbacks(MotoWatchFace.this)
-                    .addOnConnectionFailedListener(MotoWatchFace.this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
                     .build();
 
             mGoogleApiClient.connect();
-            Wearable.DataApi.addListener(mGoogleApiClient, MotoWatchFace.this);
+            Wearable.DataApi.addListener(mGoogleApiClient, this);
 
             setWatchFaceStyle(new WatchFaceStyle.Builder(MotoWatchFace.this)
                     .setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
@@ -270,10 +266,7 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
             Resources resources = MotoWatchFace.this.getResources();
 
             Drawable backgroundDrawable = resources.getDrawable(R.drawable.watchface2, null);
-            Drawable backgroundAmbientDrawable = resources.getDrawable(R.drawable.watchfaceambient2, null);
             mBackgroundBitmap = ((BitmapDrawable) backgroundDrawable).getBitmap();
-            mBackgroundAmbientBitmap = ((BitmapDrawable) backgroundAmbientDrawable).getBitmap();
-
 
             mBackgroundPaint = new Paint();
             mBackgroundPaint.setColor(resources.getColor(R.color.background));
@@ -297,6 +290,15 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
             secondHand = new AccentHand(mSecondHandPaint, secondHandWidth, handOffsetLength * 2f);
 
             calendar = new GregorianCalendar(TimeZone.getDefault());
+
+            displayCalendar = new DisplayCalendar(getResources().getColor(R.color.accessoryColor),
+                    getResources().getColor(R.color.dayColor),
+                    Typeface.createFromAsset(getAssets(), "fonts/AC.ttf"));
+
+            displayBattery = new DisplayBattery(getResources().getColor(R.color.secondHandColor));
+
+            displayWeather = new DisplayWeather(getResources().getColor(R.color.dayColor),
+                    Typeface.createFromAsset(getAssets(), "fonts/AC.ttf"));
         }
 
         @Override
@@ -308,7 +310,7 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
                     Log.i("KMAGER", "TAP_TYPE_TOUCH");
                     if ( displayWeather.accessoryTap(x,y) || displayBattery.accessoryTap(x,y)) {
                         Log.i("KMAGER", "WE TAPPED ONE OF THE ACCESSORIES");
-                        if (mobileBatteryPercent < 0f || weather == null) {
+                        if (displayBattery.getMobileBatteryAngle() < 0f || displayWeather.getWeather() == null) {
                             Log.i("KMAGER","ACCESSORY TAPPED AND NEEDS HELP");
                         }
                     }
@@ -357,14 +359,6 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
                 invalidate();
             }
 
-            if (mAmbient && mBackgroundScaledBitmap != null) {
-                mBackgroundScaledBitmap = Bitmap.createScaledBitmap(mBackgroundAmbientBitmap,
-                        mBackgroundScaledBitmap.getWidth(), mBackgroundScaledBitmap.getHeight(), true /* filter */);
-            } else {
-                mBackgroundScaledBitmap = Bitmap.createScaledBitmap(mBackgroundBitmap,
-                        mBackgroundScaledBitmap.getWidth(), mBackgroundScaledBitmap.getHeight(), true /* filter */);
-            }
-
             // Whether the timer should be running depends on whether we're visible (as well as
             // whether we're in ambient mode), so we may need to start or stop the timer.
             updateTimer();
@@ -380,6 +374,11 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
 //                        mBackgroundScaledBitmap = Bitmap.createScaledBitmap(mBackgroundAmbientBitmap,
                         width, height, true /* filter */);
             }
+
+            displayCalendar.setFaceDimensions(height,width);
+            displayBattery.setFaceDimensions(height,width);
+            displayWeather.setFaceDimensions(height,width);
+
             super.onSurfaceChanged(holder, format, width, height);
         }
 
@@ -387,39 +386,17 @@ public class MotoWatchFace extends CanvasWatchFaceService implements
         public void onDraw(Canvas canvas, Rect bounds) {
             calendar= Calendar.getInstance();
 
-            faceWidth = bounds.width();
-            faceHeight = bounds.height();
-            xCenter = faceWidth / 2.0f;
-            yCenter = faceHeight / 2.0f;
+            xCenter = bounds.width() / 2.0f;
+            yCenter = bounds.height() / 2.0f;
 
             //draw background
             canvas.drawBitmap(mBackgroundScaledBitmap, 0, 0, null);
 
-            if (!isInAmbientMode()) {
-                if (displayCalendar == null) {
-                    displayCalendar = new DisplayCalendar(getResources().getColor(R.color.accessoryColor),
-                            getResources().getColor(R.color.dayColor),
-                            Typeface.createFromAsset(getAssets(), "fonts/AC.ttf"),
-                            faceHeight,
-                            faceWidth);
-                }
-                displayCalendar.display(canvas, calendar.get(Calendar.DAY_OF_WEEK), calendar.get(Calendar.DAY_OF_MONTH));
+            displayCalendar.setDisplayData(calendar.get(Calendar.DAY_OF_WEEK), calendar.get(Calendar.DAY_OF_MONTH));
+            displayCalendar.display(canvas);
+            displayWeather.display(canvas);
 
-                if (displayWeather == null) {
-                    displayWeather = new DisplayWeather(getResources().getColor(R.color.dayColor),
-                            Typeface.createFromAsset(getAssets(), "fonts/AC.ttf"),
-                            faceHeight,
-                            faceWidth);
-                }
-                displayWeather.display(canvas, weather);
-
-                if (displayBattery == null) {
-                    displayBattery = new DisplayBattery(getResources().getColor(R.color.secondHandColor),
-                            faceHeight,
-                            faceWidth);
-                }
-                displayBattery.display(canvas, batteryPercent, mobileBatteryPercent);
-            }
+            displayBattery.display(canvas);
 
             // draw hours / minute / second hands
             //draw hour hand base
