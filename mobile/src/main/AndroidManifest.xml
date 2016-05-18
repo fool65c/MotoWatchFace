@@ -39,6 +39,12 @@
             android:enabled="true"
             android:exported="false" />
 
+        <service android:name=".service.ListenerServiceFromWear">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+        </service>
+
         <!--receivers-->
         <receiver
             android:name=".receivers.BootReceiver"
