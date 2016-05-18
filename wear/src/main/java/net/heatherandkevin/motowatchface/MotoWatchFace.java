@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.wearable.activity.ConfirmationActivity;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
@@ -42,12 +43,16 @@ import android.view.WindowInsets;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.data.FreezableUtils;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.DataMapItem;
+import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
 import net.heatherandkevin.motowatchface.Accessory.Display.DisplayBattery;
@@ -82,6 +87,17 @@ public class MotoWatchFace extends CanvasWatchFaceService
      * Handler message id for updating the time periodically in interactive mode.
      */
     private static final int MSG_UPDATE_TIME = 0;
+
+    /**
+     * Used to open the mobile app
+     */
+    private static final String OPEN_MAIN_ACTIVITY_PATH = "/openMainActivity";
+
+    /**
+     * Used to filter messages from mobile device
+     */
+    private static final String BATTERY_URI = "/BATTERY_LEVEL";
+    private static final String WEATHER_URI = "/WEATHER_STATS";
 
     @Override
     public Engine onCreateEngine() {
@@ -205,10 +221,6 @@ public class MotoWatchFace extends CanvasWatchFaceService
          * Begin GoogleApiClient operations
          */
         GoogleApiClient mGoogleApiClient;
-        private static final String BATTERY_URI = "/BATTERY_LEVEL";
-
-        private static final String WEATHER_URI = "/WEATHER_STATS";
-
 
         @Override
         public void onConnected(Bundle bundle) {}
@@ -310,25 +322,55 @@ public class MotoWatchFace extends CanvasWatchFaceService
             switch (tapType) {
                 case WatchFaceService.TAP_TYPE_TAP:
                 case WatchFaceService.TAP_TYPE_TOUCH:
-                    Log.i("KMAGER", "TAP_TYPE_TOUCH");
                     if ( displayWeather.accessoryTap(x,y) || displayBattery.accessoryTap(x,y)) {
-                        Log.i("KMAGER", "WE TAPPED ONE OF THE ACCESSORIES");
                         if (displayBattery.getMobileBatteryAngle() < 0f || displayWeather.getWeather() == null) {
-                            Log.i("KMAGER","ACCESSORY TAPPED AND NEEDS HELP");
+                            Intent intent = new Intent(MotoWatchFace.this, ConfirmationActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE,
+                                    ConfirmationActivity.OPEN_ON_PHONE_ANIMATION);
+                            startActivity(intent);
+                            openActivityOnMobileDevice();
                         }
                     }
                     break;
 
                 case WatchFaceService.TAP_TYPE_TOUCH_CANCEL:
-                    Log.i("KMAGER", "TAP_TYPE_TOUCH_CANCEL");
                     break;
 
                 default:
-                    Log.i("KMAGER", "DEFAULT");
                     super.onTapCommand(tapType, x, y, eventTime);
                     break;
             }
         }
+
+        private void openActivityOnMobileDevice(){
+            Wearable.NodeApi.getConnectedNodes(mGoogleApiClient)
+                    .setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
+                @Override
+                public void onResult(@NonNull NodeApi.GetConnectedNodesResult getConnectedNodesResult) {
+                    for (Node node : getConnectedNodesResult.getNodes()) {
+                        sendMessage(node.getId());
+                    }
+                }
+            });
+        }
+
+        private void sendMessage(String node) {
+            Wearable.MessageApi.sendMessage(mGoogleApiClient,
+                    node,
+                    OPEN_MAIN_ACTIVITY_PATH,
+                    new byte[0]).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
+                @Override
+                public void onResult(@NonNull MessageApi.SendMessageResult sendMessageResult) {
+                    if (!sendMessageResult.getStatus().isSuccess()) {
+                        Log.e("GoogleApi", "Failed to send message with status code: "
+                                + sendMessageResult.getStatus().getStatusCode());
+                    }
+                }
+            });
+        }
+
+
 
         @Override
         public void onApplyWindowInsets(WindowInsets insets) {
