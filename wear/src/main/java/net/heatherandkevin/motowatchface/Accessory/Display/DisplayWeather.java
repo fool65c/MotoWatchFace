@@ -12,12 +12,13 @@ import net.heatherandkevin.motowatchface.domain.WatchFaceWeather;
 
 /**
  * Created by kmager on 5/2/16.
+ * displays the weather in accessory
  */
 public class DisplayWeather extends DisplayAccessory {
-    private final int FONT_SIZE = 24;
-    private final float IMAGE_OFFSET = 10f;
-    private final float TEXT_OFFSET = 23f;
-    private final float UNKNOWN_TEXT_OFFSET = 10f;
+    private static final int FONT_SIZE = 24;
+    private static final float IMAGE_OFFSET = 10f;
+    private static final float TEXT_OFFSET = 23f;
+    private static final float UNKNOWN_TEXT_OFFSET = 10f;
     private Paint tempPaint;
     private RectF oval;
     private float xCenter;

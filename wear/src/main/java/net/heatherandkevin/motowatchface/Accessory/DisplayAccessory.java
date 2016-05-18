@@ -5,6 +5,7 @@ import android.graphics.RectF;
 
 /**
  * Created by kmager on 5/1/16.
+ * Base class for all accessory
  */
 public abstract class DisplayAccessory {
     private final float OUTER_OFFSET = 30.0f;

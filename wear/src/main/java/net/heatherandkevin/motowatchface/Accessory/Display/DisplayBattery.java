@@ -12,13 +12,13 @@ import net.heatherandkevin.motowatchface.clockhand.ClockHand;
 
 /**
  * Created by kmager on 5/2/16.
+ * displays the battery
  */
 public class DisplayBattery extends DisplayAccessory {
-    private final float HAND_WIDTH = 2f;
-    private final float HAND_OFFSET = 0f;
-    private final float HAND_SETBACK = 6f;
-    private final float BASE_MOUNT_WIDTH = 4f;
-    private float handLength;
+    private static final float HAND_WIDTH = 2f;
+    private static final float HAND_OFFSET = 0f;
+    private static final float HAND_SETBACK = 6f;
+    private static final float BASE_MOUNT_WIDTH = 4f;
     private ClockHand batteryHand;
     private float xCenter;
     private float yCenter;
@@ -59,9 +59,7 @@ public class DisplayBattery extends DisplayAccessory {
         yCenter = calculateYCenter(AccessoryPosition.TOP, faceHeight);
 
         oval = calculateRectPosition(AccessoryPosition.TOP, AccessoryType.FULL_DISPLAY, faceHeight, faceWidth);
-
-        handLength = (ACCESSORY_CIRCLE_SIZE - HAND_SETBACK) / 320f * faceHeight;
-        batteryHand.setHandLength(handLength);
+        batteryHand.setHandLength( (ACCESSORY_CIRCLE_SIZE - HAND_SETBACK) / 320f * faceHeight);
     }
 
     @Override

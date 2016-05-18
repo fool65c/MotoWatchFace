@@ -2,12 +2,14 @@ package net.heatherandkevin.motowatchface.clockhand;
 
 /**
  * Created by kmager on 4/7/16.
+ * used for base clock hands
  */
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 /**
  * Created by kmager on 3/20/16.
+ * Used for base clock hands
  */
 public abstract class ClockHand {
     protected Paint handPaint;

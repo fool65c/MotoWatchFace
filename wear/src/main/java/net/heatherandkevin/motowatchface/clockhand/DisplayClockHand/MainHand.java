@@ -7,6 +7,7 @@ import net.heatherandkevin.motowatchface.clockhand.ClockHand;
 
 /**
  * Created by kmager on 4/7/16.
+ * main clock hands
  */
 public class MainHand extends ClockHand {
     private Paint handTipPaint;

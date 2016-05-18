@@ -7,6 +7,7 @@ import net.heatherandkevin.motowatchface.clockhand.ClockHand;
 
 /**
  * Created by kmager on 4/7/16.
+ * hands that are not hour or minute
  */
 public class AccentHand extends ClockHand {
     private float handOffSetLength;

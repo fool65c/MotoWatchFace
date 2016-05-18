@@ -14,9 +14,10 @@ import java.util.Map;
 
 /**
  * Created by kmager on 5/1/16.
+ * displays the calendar
  */
 public class DisplayCalendar extends DisplayAccessory {
-    private final int FONT_SIZE = 34;
+    private static final int FONT_SIZE = 34;
     private Map <Integer,Map<String,Float>> dayLocations;
     private Paint daySelectionPaint;
     private Paint dayNumberPaint;
