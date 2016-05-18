@@ -47,6 +47,7 @@ public class DisplayWeather extends DisplayAccessory {
     public void setWeather(WatchFaceWeather weather) {
         this.weather = weather;
         tempString = String.format("%.1f" + (char) 0x00B0, weather.getTemp());
+        init();
     }
 
     public WatchFaceWeather getWeather() {
