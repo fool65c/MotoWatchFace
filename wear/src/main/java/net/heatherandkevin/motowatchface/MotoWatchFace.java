@@ -32,6 +32,7 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
@@ -216,7 +217,7 @@ public class MotoWatchFace extends CanvasWatchFaceService
         public void onConnectionSuspended(int i) {}
 
         @Override
-        public void onConnectionFailed(ConnectionResult connectionResult) {}
+        public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 
         @Override
         public void onDataChanged(DataEventBuffer dataEvents) {
@@ -266,23 +267,25 @@ public class MotoWatchFace extends CanvasWatchFaceService
             Resources resources = MotoWatchFace.this.getResources();
 
             Drawable backgroundDrawable = resources.getDrawable(R.drawable.watchface2, null);
-            mBackgroundBitmap = ((BitmapDrawable) backgroundDrawable).getBitmap();
+            if (backgroundDrawable != null) {
+                mBackgroundBitmap = ((BitmapDrawable) backgroundDrawable).getBitmap();
+            }
 
             mBackgroundPaint = new Paint();
-            mBackgroundPaint.setColor(resources.getColor(R.color.background));
+            mBackgroundPaint.setColor(resources.getColor(R.color.background, null));
 
             mHandPaint = new Paint();
-            mHandPaint.setColor(resources.getColor(R.color.handColor));
+            mHandPaint.setColor(resources.getColor(R.color.handColor, null));
             mHandPaint.setAntiAlias(true);
 
             mHandBasePaint= new Paint(mHandPaint);
 
             mHandTipPaint= new Paint();
-            mHandTipPaint.setColor(resources.getColor(R.color.handTipColor));
+            mHandTipPaint.setColor(resources.getColor(R.color.handTipColor, null));
             mHandTipPaint.setAntiAlias(true);
 
             mSecondHandPaint = new Paint();
-            mSecondHandPaint.setColor(resources.getColor(R.color.secondHandColor));
+            mSecondHandPaint.setColor(resources.getColor(R.color.secondHandColor, null));
             mSecondHandPaint.setAntiAlias(true);
 
             hourHand = new MainHand(mHandPaint, mHandTipPaint, hourHandWidth);
@@ -291,13 +294,13 @@ public class MotoWatchFace extends CanvasWatchFaceService
 
             calendar = new GregorianCalendar(TimeZone.getDefault());
 
-            displayCalendar = new DisplayCalendar(getResources().getColor(R.color.accessoryColor),
-                    getResources().getColor(R.color.dayColor),
+            displayCalendar = new DisplayCalendar(getResources().getColor(R.color.accessoryColor, null),
+                    getResources().getColor(R.color.dayColor, null),
                     Typeface.createFromAsset(getAssets(), "fonts/AC.ttf"));
 
-            displayBattery = new DisplayBattery(getResources().getColor(R.color.secondHandColor));
+            displayBattery = new DisplayBattery(getResources().getColor(R.color.secondHandColor, null));
 
-            displayWeather = new DisplayWeather(getResources().getColor(R.color.dayColor),
+            displayWeather = new DisplayWeather(getResources().getColor(R.color.dayColor, null),
                     Typeface.createFromAsset(getAssets(), "fonts/AC.ttf"));
         }
 
